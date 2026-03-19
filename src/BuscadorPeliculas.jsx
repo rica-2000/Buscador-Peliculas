@@ -2,15 +2,14 @@ import { useState } from "react";
 import "./BuscadorPeliculas.css";
 
 export const BuscadorPeliculas = () => {
-	const url = "https://api.themoviedb.org/3/search/movie";
-	const apiKey = import.meta.env.VITE_API_KEY;
-
 	const [search, setSearch] = useState("");
 	const [peliculas, setPeliculas] = useState([]);
 
 	const fetchPeliculas = async (e) => {
 		try {
-			const response = await fetch(`${url}?api_key=${apiKey}&query=${search}`);
+			const response = await fetch(
+				`/.netlify/functions/searchMovies?query=${search}`,
+			);
 			const data = await response.json();
 			setPeliculas(data.results || []);
 		} catch (error) {

@@ -56,5 +56,3 @@ Para desplegar esta aplicación en producción (por ejemplo, en Netlify o Vercel
 2.  El comando de construcción es `npm run build`.
 
 ---
-
-Desarrollado con ❤️ por [rica-2000](https://github.com/rica-2000)
