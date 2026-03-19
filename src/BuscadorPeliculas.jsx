@@ -11,6 +11,11 @@ export const BuscadorPeliculas = () => {
 				`/.netlify/functions/searchMovies?query=${search}`,
 			);
 			const data = await response.json();
+
+			if (!response.ok) {
+				console.error("Error from server:", data);
+				return;
+			}
 			setPeliculas(data.results || []);
 		} catch (error) {
 			console.error("Error fetching movies:", error);

@@ -2,6 +2,15 @@ export const handler = async (event, context) => {
 	const apiKey = process.env.API_KEY;
 	const search = event.queryStringParameters.query;
 
+	if (!apiKey) {
+		return {
+			statusCode: 500,
+			body: JSON.stringify({
+				error: "Server configuration error: Missing API Key",
+			}),
+		};
+	}
+
 	if (!search) {
 		return {
 			statusCode: 400,
@@ -15,6 +24,13 @@ export const handler = async (event, context) => {
 		);
 		const data = await response.json();
 
+		if (!response.ok) {
+			return {
+				statusCode: response.status,
+				body: JSON.stringify(data),
+			};
+		}
+
 		return {
 			statusCode: 200,
 			headers: {
@@ -23,6 +39,7 @@ export const handler = async (event, context) => {
 			body: JSON.stringify(data),
 		};
 	} catch (error) {
+		console.error("Lambda Error:", error);
 		return {
 			statusCode: 500,
 			body: JSON.stringify({ error: "Failed to fetch movies" }),
